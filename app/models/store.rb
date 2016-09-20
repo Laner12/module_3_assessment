@@ -7,19 +7,25 @@ class Store
               :total
 
   def initialize(raw_store)
-    @city = raw_store['stores']['city']
-    @distance = raw_store['stores']['distance']
-    @long_name = raw_store['stores']['longName']
-    @phone = raw_store['stores']['phone']
-    @store_type = raw_store['stores']['storeType']
-    @total = raw_store['stores']['total']
+    @city = raw_store['city']
+    @distance = raw_store['distance']
+    @long_name = raw_store['longName']
+    @phone = raw_store['phone']
+    @store_type = raw_store['storeType']
   end
 
   def self.all_by_zip_code(zip_code)
-    connection = Faraday.get("https://api.bestbuy.com/v1/stores(area(#{zip_code},25))?format=json&show=city,distance,longName,phone,storeType&pageSize=15&apiKey=#{ENV['BEST_BUY_API_KEY']}")
+
+    # @output = JSON.parse(connection.body)
+    # @stores = @output['stores']
+    response = StoreSearchService.new(zip_code)
     binding.pry
-    @stores = JSON.parse(connection.body).map do |store|
+    response.map do |store|
       Store.new(store)
     end
+  end
+
+  def total
+    @output['total']
   end
 end
