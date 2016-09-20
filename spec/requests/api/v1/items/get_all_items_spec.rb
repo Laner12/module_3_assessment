@@ -1,4 +1,18 @@
-# 
+require 'rails_helper'
+
+RSpec.describe "items api" do
+  it "returns all items" do
+    item = create(:item, name: "lane")
+    item2 = create(:item, name: "dan")
+
+    get "/api/v1/items"
+
+    expect(response).to be_success
+
+    expect(response.count).to eq(2)
+  end
+end
+#
 # We need an API for the application that can both read and write data. Start by focusing on functionality for items. All of this should happen in a dedicated, versioned controller.
 #
 # When I send a GET request to `/api/v1/items`
