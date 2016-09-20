@@ -18,33 +18,16 @@ RSpec.feature "User can search by zip" do
     # And I should see exactly 15 results
     expect(page).to have_selector('stores', count: 15)
     # And I should see the long name, city, distance, phone number and store type for each of the 15 results
+    expect(page).to have_content("Denver")
+    expect(page).to have_content(3.25)
+    expect(page).to have_content("Best Buy Mobile - Cherry Creek Shopping Center")
+    expect(page).to have_content("303-270-9189")
+    expect(page).to have_content("Mobile")
+
+    expect(page).not_to have_content("Boulder")
+    expect(page).not_to have_content(22.79)
+    expect(page).not_to have_content("Best Buy - Boulder")
+    expect(page).not_to have_content("303-938-2889")
+    expect(page).not_to have_content("BigBox")
   end
 end
-# should see
-# "city": "Denver",
-# "distance": 3.25,
-# "longName": "Best Buy Mobile - Cherry Creek Shopping Center",
-# "phone": "303-270-9189",
-# "storeType": "Mobile"
-# },
-# {
-# "city": "Lakewood",
-# "distance": 5.28,
-# "longName": "Best Buy - Belmar",
-# "phone": "303-742-8039",
-# "storeType": "BigBox"
-# },
-
-# should not see
-# "city": "Parker",
-# "distance": 20.85,
-# "longName": "Best Buy - Parker",
-# "phone": "303-840-5501",
-# "storeType": "BigBox"
-# },
-# {
-# "city": "Boulder",
-# "distance": 22.79,
-# "longName": "Best Buy - Boulder",
-# "phone": "303-938-2889",
-# "storeType": "BigBox"
