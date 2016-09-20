@@ -15,17 +15,9 @@ class Store
   end
 
   def self.all_by_zip_code(zip_code)
-
-    # @output = JSON.parse(connection.body)
-    # @stores = @output['stores']
     response = StoreSearchService.new(zip_code)
-    binding.pry
-    response.map do |store|
+    response.json_response_for_stores.map do |store|
       Store.new(store)
     end
-  end
-
-  def total
-    @output['total']
   end
 end
