@@ -6,9 +6,9 @@ RSpec.feature "User can search by zip" do
     # When I visit "/"
     visit '/'
 
-    expect(page).to have_content("Search")
+    expect(page).to have_button("Search")
     # And I fill in a search box with "80202" and click "search"
-    fill_in "Search by zip", with: 80202
+    fill_in "zip_code_search", with: 80202
     click_on "Search"
     # Then my current path should be "/search" (ignoring params)
     expect(current_path).to eq("/search")
