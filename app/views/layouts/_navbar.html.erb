@@ -22,9 +22,11 @@
       <li>
         <form class="navbar-form" role="search">
         <div class="form-group">
+          <% form_tag :search, method: :get, class: "form-inline" do %>
           <input type="text" class="form-control" placeholder="Search by zip">
         </div>
         <button type="submit" class="btn btn-default">Search</button>
+        <% end %>
       </form>
       </li>
     </ul>
