@@ -7,24 +7,36 @@ RSpec.describe "items api" do
 
     get "/api/v1/items"
 
+    json = JSON.parse(response.body)
+
     expect(response).to be_success
 
-    expect(response.count).to eq(2)
+    expect(json.count).to eq(2)
+  end
+
+  it "should return one" do
+    item = create(:item, name: "lane", id: 1)
+    item2 = create(:item, name: "dan", id: 2)
+
+    get "/api/v1/items/1"
+
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json.count).to eq(6)
+    expect(json['name']).to eq("lane")
+    expect(json['id']).to eq(1)
+    expect(json['name']).not_to eq("dan")
+    expect(json['id']).not_to eq(2)
+  end
+
+  it "it should delete one" do
+    item = create(:item, name: "lane", id: 1)
+    item2 = create(:item, name: "dan", id: 2)
+
+    delete "/api/v1/items/1"
+
+    expect(response.body).to eq(204)
   end
 end
-#
-# We need an API for the application that can both read and write data. Start by focusing on functionality for items. All of this should happen in a dedicated, versioned controller.
-#
-# When I send a GET request to `/api/v1/items`
-# I receive a 200 JSON response containing all items
-# And each item has an id, name, description, and image_url but not the created_at or updated_at
-#
-# When I send a GET request to `/api/v1/items/1`
-# I receive a 200 JSON response containing the id, name, description, and image_url but not the created_at or updated_at
-#
-# When I send a DELETE request to `/api/v1/items/1`
-# I receive a 204 JSON response if the record is successfully deleted
-#
-# When I send a POST request to `/api/v1/items` with a name, description, and image_url
-# I receive a 201 JSON  response if the record is successfully created
-# And I receive a JSON response containing the id, name, description, and image_url but not the created_at or updated_at

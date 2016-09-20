@@ -3,7 +3,16 @@ class Api::V1::ItemsController < ApplicationController
 
   def index
     response = Item.all
-    binding.pry
+    respond_with response
+  end
+
+  def show
+    response = Item.find(params[:id])
+    respond_with response
+  end
+
+  def destroy
+    response = Item.find(params[:id]).delete
     respond_with response
   end
 end
